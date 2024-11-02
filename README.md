@@ -40,10 +40,19 @@ All the files in git repository are either `tracked` or `untracked`. The `untrac
 The loop usually goes like this:
 ```mermaid
   stateDiagram-v2
-      untracked-->Staged : git add
-      state Staged {
+
+  classDef it font-style:italic
+      untracked-->Tracked:::it : git add
+      state Tracked {
         modified --> staged : git add -u
         staged-->tracked : git commit
         tracked-->modified : some changes
+        note left of staged: all newly added files go here
       }
 ```
+About that `git add -u` thingie: it lets you automatically stage all modified tracked files without adding untracked ones. Pretty cool huh??
+
+## HOW NOT TO GET LOST
+
+Eventually there'll be a whole lot of commits – "but how do I diffirentiate them", you ask? Why, it's easy!<br>
+Firstly, every commit has a unique SHA-1 hash, and you can adress the commit by that hash any time. Secondly, each commit should have a comprehensive commit message (and you should leave these messages too when commiting!).<br>Hashes and messages are visible on `git log`, but the entirety of `git log` gets pretty lengthy – so you can either use `git log --oneline` to ouput shortened versions of log messages, or, if you need to find out who screwed up your favourite file – use `git blame <my-favourite-file>`!
